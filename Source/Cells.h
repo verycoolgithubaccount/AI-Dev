@@ -18,10 +18,10 @@ public:
 		m_data.resize(width * height);
 	}
 
-	const T& Read(int x, int y) const { return m_data[x + (y * m_width)]; }
+	T Read(int x, int y) const { return m_data[x + (y * m_width)]; }
 	void Write(int x, int y, const T& value) { m_data[x + (y * m_width)] = value; }
 
-	const std::vector<T>& GetData() const { return m_data; }
+	std::vector<T>& GetData() { return m_data; }
 
 	int GetWidth() const { return m_width; }
 	int GetHeight() const { return m_height; }

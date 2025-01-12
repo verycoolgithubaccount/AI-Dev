@@ -1,40 +1,26 @@
 #include "CellularAutomatonScene.h"
 
-color_t white{ 255, 255, 255, 255 };
-color_t black{ 0, 0, 0, 255 };
-int rule = 22;
+const color_t white{ 255, 255, 255, 255 };
+const color_t black{ 0, 0, 0, 255 };
+const int rule = 22;
 
 bool CellularAutomatonScene::Initialize()
 {
 	m_renderer.Initialize();
-	m_renderer.CreateWindow("Example", 800, 600);
+	m_renderer.CreateWindow("Cellular Automaton", 800, 600);
 
 	m_input.Initialize();
 	m_input.Update();
 
 	m_framebuffer = std::make_unique<Framebuffer>(m_renderer, m_renderer.m_width / 2, m_renderer.m_height / 2);
-	m_cells = std::make_unique<Cells<bool>>(m_renderer.m_width / 2, m_renderer.m_height / 2);
+	m_cells = std::make_unique<Cells<uint8_t>>(m_framebuffer->m_width, m_framebuffer->m_height);
 
 	return true;
 }
 
 void CellularAutomatonScene::Update()
 {
-	m_time.Tick();
-	m_input.Update();
-
-	SDL_Event event;
-	while (SDL_PollEvent(&event))
-	{
-		if (event.type == SDL_QUIT)
-		{
-			m_quit = true;
-		}
-		if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE)
-		{
-			m_quit = true;
-		}
-	}
+	Scene::Update();
 
 	// middle column, top row, set it to 1 (true)
 	m_cells->Write(m_cells->GetWidth() / 2, 0, 1);
