@@ -6,7 +6,7 @@
 
 int main(int, char**)
 {
-	std::unique_ptr<GOLScene> scene = std::make_unique<GOLScene>();
+	std::unique_ptr<CellularAutomatonScene> scene = std::make_unique<CellularAutomatonScene>();
 
 	scene->Initialize();
 	while (!scene->IsQuit())

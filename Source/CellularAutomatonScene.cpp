@@ -2,7 +2,7 @@
 
 const color_t white{ 255, 255, 255, 255 };
 const color_t black{ 0, 0, 0, 255 };
-const int rule = 22;
+const int rule = 195;
 
 bool CellularAutomatonScene::Initialize()
 {
@@ -37,8 +37,8 @@ void CellularAutomatonScene::Update()
 			i |= m_cells->Read(x - 1, y) << 2;
 			i |= m_cells->Read(x + 1, y);
 
-			uint8_t state = (rule & 1 << i);
-			m_cells->Write(x, y + 1, state);
+			uint8_t state = (rule & (1 << i)) ? 1 : 0;
+            m_cells->Write(x, y + 1, state);
 		}
 	}
 }
@@ -53,15 +53,6 @@ void CellularAutomatonScene::Draw()
 		// draw the booleans in the cells on the screen as white = true and black = false
 		m_framebuffer->m_buffer[i] = (m_cells->GetData()[i]) ? white : black;
 	}
-
-
-	/*
-	for (int i = 0; i < 100000; i++)
-	{
-		m_framebuffer->DrawPoint(rand() % m_renderer.m_width / 2, rand() % m_renderer.m_height / 2, color_t{ uint8_t(rand() % 255), uint8_t(rand() % 255), uint8_t(rand() % 255), 255 });
-	}
-	*/
-
 
 	// update framebuffer
 	m_framebuffer->Update();
